@@ -1,0 +1,12 @@
+[
+    {
+        "module": "module1",
+        "method": "method1",
+        "params": ["param1", "param2", "param3"]
+    },
+    {
+        "module": "module2",
+        "method": "method2",
+        "params": ["param1", "param2", "param3"]
+    }
+]
