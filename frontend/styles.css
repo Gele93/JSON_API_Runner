@@ -54,7 +54,8 @@ button {
     background-color: var(--primary);
     padding: 0.5rem;
     border-radius: 10px;
-    color: var(--text)
+    color: var(--text);
+    width: 12vw;
 }
 button:hover {
     border-color: var(--contrast);
@@ -84,9 +85,6 @@ main {
     align-items: center;
     gap: 2vh;
 }
-#selector-container > button {
-    width: 100%;
-}
 
 .reverse {
     flex-direction: row-reverse;
@@ -94,16 +92,20 @@ main {
 
 #data-container{
     width: 60vw;
-    display: grid;
-  grid-template-columns: 30% 70%;
+    justify-content: space-between;
+    display: flex;
 }
 
 #data-input-container {
     gap: 2vh;
-    width: 100%;
     height: 20vh;
+    width: 40vw;
     align-items: center;
     justify-content: start;
+}
+
+.data-input {
+    width: 100%;
 }
 
 .selector-line {

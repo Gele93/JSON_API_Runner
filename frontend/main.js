@@ -1,8 +1,21 @@
 import { methodMap } from "./methodMap.js"
 const body = document.getElementById("body")
 const root = document.getElementById("root")
-const api = "http://localhost:3000"
+const api = "http://localhost:3000/api"
 
+const dataState = {
+    inputType: "manual",
+    JSON: "",
+    dropDown: {
+        module: "",
+        method: "",
+        params: []
+    }
+}
+
+const responseState = {
+    data: []
+}
 
 const handleThemeToggle = (e) => {
     const button = e.target
@@ -23,7 +36,6 @@ const handleAlignToggle = (e) => {
     const currentSide = button.dataset.side
     const dataContainer = document.getElementById("data-container")
 
-    console.log(e.target)
     if (currentSide === "left") {
         dataContainer.classList.add("reverse")
         button.dataset.side = "right"
@@ -37,6 +49,7 @@ const handleAlignToggle = (e) => {
 
 const createTextArea = () => `<textarea id="data-input-text" rows="10" cols="50" placeholder="Insert JSON manually"></textarea>`
 
+
 const handleMethodSelection = (e) => {
     const dataInputContainer = document.getElementById("data-input-container")
     const currentParamsContainer = document.getElementById("params-selector-container")
@@ -49,7 +62,7 @@ const handleMethodSelection = (e) => {
 <input type="text" id="params" name="params" placeholder="Params separated by commas">
 </div>
 `
-
+    dataState.dropDown.method = e.target.value
     dataInputContainer.insertAdjacentHTML("beforeend", element)
 }
 
@@ -64,19 +77,20 @@ const handleApiSelection = (e) => {
         dataInputContainer.removeChild(currentParamsContainer)
 
     const moduleName = e.target.value
-    const element = createApiSelector(moduleName)
+    const element = createMethodSelector(moduleName)
+    dataState.dropDown.module = moduleName
 
     dataInputContainer.insertAdjacentHTML("beforeend", element)
     const methodSelector = document.getElementById("method-selector")
     methodSelector.addEventListener("change", handleMethodSelection)
 }
 
-const createApiSelector = (moduleName) => {
+const createMethodSelector = (moduleName) => {
     let element = `
 <div id="method-selector-container" class="selector-line">
 <label for="method-selector">Choose a method:</label>
 <select id="method-selector" name="method-selector">
-<option value="">--Please choose an api--</option>
+<option value="">--Please choose a method--</option>
 `
 
     for (const method of methodMap[moduleName]) {
@@ -92,13 +106,13 @@ const createApiSelector = (moduleName) => {
 }
 
 
-const createDropDownApiSelector = () => {
+const createModuleSelector = () => {
 
     let element = `
 <div id="api-selector-container" class="selector-line">
-<label for="api-selector">Choose an api:</label>
+<label for="api-selector">Choose a module:</label>
 <select id="api-selector" name="api-selector">
-<option value="">--Please choose an api--</option>
+<option value="">--Please choose a module--</option>
 `
     for (const module in methodMap) {
         element += `<option value="${module}">${module}</option>
@@ -112,14 +126,22 @@ const createDropDownApiSelector = () => {
     return element
 }
 
-const handleDropDownSelection = () => {
-    const dataInputContainer = document.getElementById("data-input-container")
-    const element = createDropDownApiSelector()
+const handleDropDownSelection = (dataInputContainer) => {
+    const element = createModuleSelector()
     dataInputContainer.insertAdjacentHTML("beforeend", element)
     const apiSelector = document.getElementById("api-selector")
     apiSelector.addEventListener("change", handleApiSelection)
 }
 
+const handleJsonChange = (e) => {
+    dataState.JSON = e.target.value
+}
+
+const handleManualSelection = (dataInputContainer) => {
+    dataInputContainer.insertAdjacentHTML("beforeend", createTextArea())
+    const textarea = document.getElementById("data-input-text")
+    textarea.addEventListener("input", handleJsonChange)
+}
 
 const handleInputTypeChange = (e) => {
     const inputType = e.target.value
@@ -127,11 +149,76 @@ const handleInputTypeChange = (e) => {
     switch (inputType) {
         case "dropdown":
             dataInputContainer.innerHTML = ""
-            handleDropDownSelection()
+            handleDropDownSelection(dataInputContainer)
+            dataState.inputType = "dropdown"
             break;
         case "manual":
             dataInputContainer.innerHTML = ""
-            dataInputContainer.insertAdjacentHTML("beforeend", createTextArea())
+            handleManualSelection(dataInputContainer)
+            dataState.inputType = "manual"
+            break;
+
+        default:
+            break;
+    }
+}
+
+const collectParams = () => {
+    dataState.dropDown.params = []
+    const paramsString = document.getElementById("params").value
+    paramsString
+        .split(",")
+        .map(p => p.trim())
+        .filter(p => p !== "")
+        .forEach(param => {
+            dataState.dropDown.params.push(param)
+        });
+}
+
+const fetchPostApi = async (callData) => {
+    try {
+        const response = await fetch(api, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: callData
+        })
+
+        if (!response.ok)
+            throw new Error("failed to fetch")
+
+        const data = await response.json()
+        return data
+
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+const handleDropDownRun = async () => {
+    collectParams()
+    responseState.data = []
+    const callData = []
+    callData.push(dataState.dropDown)
+    const responseData = await fetchPostApi(JSON.stringify(callData))
+    responseState.data = responseData
+}
+
+const handleManualRun = async () => {
+    responseState.data = []
+    const responseData = await fetchPostApi(dataState.JSON)
+    responseState.data = responseData
+}
+
+const handleRun = async () => {
+    switch (dataState.inputType) {
+        case "dropdown":
+            await handleDropDownRun()
+            break;
+
+        case "manual":
+            await handleManualRun()
             break;
 
         default:
@@ -148,6 +235,12 @@ const main = async () => {
 
     const inputTypeForm = document.getElementById("input-type-form")
     inputTypeForm.addEventListener("change", handleInputTypeChange)
+
+    const textarea = document.getElementById("data-input-text")
+    textarea.addEventListener("input", handleJsonChange)
+
+    const runButton = document.getElementById("run")
+    runButton.addEventListener("click", handleRun)
 }
 
 main()
