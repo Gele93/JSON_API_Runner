@@ -1,4 +1,4 @@
-import { error } from "console"
+import { log } from "./logger.js"
 
 /**
  * dispatching incoming calls and calling needed methods from chosen modules 
@@ -29,9 +29,15 @@ const handleCall = async (call) => {
         if (typeof currentModule[method] !== "function")
             throw new error(`Method ${method} was not found in ${currentModule} module`)
 
-        const result = await currentModule[method](...params)
+        log(`awaiting response from ${method} method of ${modulePath} module with params: ${params}`)
+        const result = await currentModule[method]()
+
+        if (!result)
+            throw new error(`failed to get result of the ${modulePath} module`)
+
+        log("response received successfully!")
         return result
     } catch (error) {
-        console.error(error)
+        log(error)
     }
 }

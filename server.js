@@ -1,4 +1,5 @@
 import express from "express"
+import { log } from "./backend/logger.js"
 import { join, dirname } from "path"
 import { fileURLToPath } from "url"
 import { readFile, writeFile } from "node:fs/promises"
@@ -19,10 +20,17 @@ app.get("/", (req, res) => {
 app.post("/api", async (req, res) => {
     try {
         const calls = req.body
+
+        log(`resolving ${calls.length} incoming api calls`)
         const result = await dispatchCalls(calls)
+
+        if (!result)
+            throw new error("Failed to get API results")
+
+        log("Calls resolved successfully")
         res.send(result)
     } catch (error) {
-        console.error(error)
+        log(error)
     }
 })
 
