@@ -9,9 +9,39 @@
     <link rel="stylesheet" href="static/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
   </head>
-  <body>
-    <div id="root"></div>
+  <body class="">
+        <div id="root">       
+            <header>
+                <h1>JSON API Runner</h1>
+            </header>
+            <main>
+                <div id="selector-container" class="column">
+                    <button id="theme-selector">Toggle dark mode</button>
+                    <button id="align-selector">Align Right</button>
+                </div>
+                <div id="data-container" >
+                    <div class="button-container column">
+                        <form class="column">
+                            <label><input type="radio" name="input-type" value="manual" checked> Manual input</label>
+                            <label><input type="radio" name="input-type" value="dropdown"> Select from available APIs</label>
+                        </form>
+                        <button>Run</button>
+                    </div>
+                    <textarea rows="10" cols="50" placeholder="Insert JSON manually"></textarea>
+                </div>
+                <pre id="result">
+                    Here is the result
+                </pre>
+            </main>
+            <footer>
+                <p>
+                    <span>gelecsak.tamas@gmail.com</span>
+                    <span>Gelecsák Tamás</span>
+                    <span>+36203607897</span>
+                </p>
+            </footer>
+        </div>
   </body>
 </html>
