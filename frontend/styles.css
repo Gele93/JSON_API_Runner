@@ -1,0 +1,113 @@
+:root {
+    --primary: #5492bb;
+    --secondary: #82c2dd;
+    --text: #1a1a1a;
+    --contrast: #d4d4d4;
+}
+
+.dark {
+    --primary: #002f4e;
+    --secondary: #00364d;
+    --text: #d4d4d4;
+    --contrast: #1a1a1a;
+}
+
+
+body {
+    height: 100vh;
+    width: 100vw;
+    font-family: "Outfit", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    margin: 0;
+    padding: 0; 
+    color: var(--text);
+    background: linear-gradient(to bottom, var(--primary), var(--secondary));
+}
+
+header {
+    display: flex;
+    width: 100vw;
+    height: 6vh;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+footer {
+    font-size: small;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+footer > p {
+    display: flex;
+    justify-content: space-evenly;
+    width: 40%;
+}
+
+button {
+    background-color: var(--primary);
+    padding: 0.5rem;
+    border-radius: 10px;
+    color: var(--text)
+}
+button:hover {
+    border-color: var(--contrast);
+    cursor:pointer
+}
+
+h1 {
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 90vh;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+#selector-container {
+    align-items: center;
+    gap: 2vh;
+}
+#selector-container > button {
+    width: 100%;
+}
+
+.reverse {
+    flex-direction: row-reverse;
+}
+
+#data-container{
+    width: 40vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#data-container > .button-container {
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+}
+
+.button-container > button {
+    width: 100%;
+}
+
+#result {
+    height: 30vh;
+}
