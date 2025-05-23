@@ -58,7 +58,8 @@ button {
 }
 button:hover {
     border-color: var(--contrast);
-    cursor:pointer
+    cursor:pointer;
+    background-color: var(--secondary);
 }
 
 h1 {
