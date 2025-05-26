@@ -40,12 +40,12 @@
 
  
 ## 3. Installation and Running
-# 1. Navigate to the project folder
-# 2. Install dependencies
+### 1. Navigate to the project folder
+### 2. Install dependencies
 ```
 npm i
 ```
-# 3. Start the backend server
+### 3. Start the backend server
 ```
 node server.js
 ```
