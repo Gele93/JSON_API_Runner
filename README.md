@@ -51,7 +51,7 @@ node server.js
 ```
 
 ### 3.1. Prerequisites
--npm
+- npm
 
 
 ## 4. Contact
