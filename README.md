@@ -19,11 +19,11 @@
 -  **getUserProfile**:  user= *2* / *Alice* / *eve@example.com*
 
   ### 1.3 Usage:
-  -Toogle dark mode & Align direction for convinient usage
-  -Choose a module to create a callstack on
-  -Manually write the array of methods to be invoked from the chosen module (or use auto fill to call them all)
-  -Set params for desired methods
-  -Click Run to invoke the methods
+  -  Toogle dark mode & Align direction for convinient usage
+  -  Choose a module to create a callstack on
+  -  Manually write the array of methods to be invoked from the chosen module (or use auto fill to call them all)
+  -  Set params for desired methods
+  -  Click Run to invoke the methods
 
 ##  2. Technology Stack
 ### 🚀 Frontend
