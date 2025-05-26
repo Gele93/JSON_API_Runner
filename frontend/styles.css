@@ -54,11 +54,14 @@ footer > p {
 }
 
 button {
+    display: flex;
+    align-items: center;
     background-color: var(--primary);
-    padding: 0.5rem;
+    padding: 1rem;
     border-radius: 10px;
     color: var(--text);
     width: 12vw;
+    height: 4vh;
 }
 button:hover {
     border-color: var(--contrast);
@@ -110,6 +113,7 @@ main {
 
 #data-input-text {
     height: 12vh;
+    width: 80%;
 }
 
 .data-input {
@@ -139,22 +143,24 @@ main {
 .param-selector-line > label {
     width: 10vw;
 }
-.param-selector-line > .param-inputs > input {}
-
-
 
 #data-container > .button-container {
-    justify-content: space-evenly;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    gap: 2vh;
     height: 100%;
+    width: 20vw;
 }
 
 .button-container > button {
     width: 100%;
 }
 
+
 #result-container {
-    height: 35vh;
+    height: 45vh;
     width: 65vw;
     border-radius: 30px;
     background-color: var(--box-background);
