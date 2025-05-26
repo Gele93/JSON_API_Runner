@@ -2,7 +2,7 @@ export const methodMap = {
     "imageService": [
         {
             function: "getImageByName",
-            params: ["imageName"],
+            params: ["image"],
             format: "image"
         },
     ],

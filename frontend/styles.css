@@ -182,3 +182,7 @@ main {
     box-shadow: 5px 5px 10px #1a1a1a;
     overflow-y: auto;
 }
+
+img {
+    width: 20vw;
+}

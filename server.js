@@ -2,7 +2,6 @@ import express from "express"
 import { log } from "./backend/logger.js"
 import { join, dirname } from "path"
 import { fileURLToPath } from "url"
-import { readFile, writeFile } from "node:fs/promises"
 import { dispatchCalls } from "./backend/dispatcher.js"
 
 const app = express()

@@ -41,7 +41,6 @@ export const getUserProfile = async (paramsData) => {
     const users = []
 
     for (const param of params) {
-        console.log(param)
         if (findById(param)) {
             users.push(findById(param))
             continue

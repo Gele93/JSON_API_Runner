@@ -218,9 +218,15 @@ const create2dArrayResult = (resultData) => {
 
     return element
 }
-const createImageResult = () => {
-
+const createImageResult = (resultData) => {
+    console.log(resultData)
+    return `
+<div class="result-line">
+    <img src="data:image/png;base64,${resultData.data}">
+</div>
+`
 }
+
 const createArrayOfObjectsResult = (resultData) => {
     let element = '<div class="result-line">'
 
