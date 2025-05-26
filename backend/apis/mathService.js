@@ -1,3 +1,5 @@
+import { log } from "../logger.js"
+
 const fib = {
     0: 0,
     1: 1
@@ -8,6 +10,7 @@ export const getFibonacci = async (params) => {
     const n = Number(params.find(p => p.name === "n").value)
     if (!n) return 0
     const result = calculateFibonacci(n)
+    log("Fibonacci calculated successfully")
     return result
 }
 
@@ -28,8 +31,6 @@ export const multiplyMatrices = (params) => {
     const array1 = JSON.parse(params.find(p => p.name === "array1").value)
     const array2 = JSON.parse(params.find(p => p.name === "array2").value)
 
-    console.log(array2)
-
     if (!array1 || !array2)
         throw new Error("missing parameter for multiply Matrices")
 
@@ -44,6 +45,8 @@ export const multiplyMatrices = (params) => {
             result[r][c] = multiplyArrays(a, b)
         }
     }
+    
+    log("Matrices Multiplied successfully!")
     return result
 }
 

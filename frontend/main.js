@@ -1,4 +1,5 @@
 import { methodMap } from "./methodMap.js"
+
 const body = document.getElementById("body")
 const api = "http://localhost:3000/api"
 
@@ -14,20 +15,34 @@ const responseState = {
     data: []
 }
 
+const startLoading = () => {
+    const resultContainer = document.getElementById("result-container")
+    resultContainer.innerHTML = ""
+    resultContainer.insertAdjacentHTML("beforeend", "<div class='loader'></div>")
+}
+
+const stopLoading = () => {
+    const resultContainer = document.getElementById("result-container")
+    const loader = document.querySelector(".loader")
+    resultContainer.removeChild(loader)
+}
+
 const fetchPostApiCallStack = async (callData) => {
+    startLoading()
     try {
         const response = await fetch(`${api}/callstack`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: callData
+            body: JSON.stringify(callData)
         })
 
         if (!response.ok)
             throw new Error("failed to fetch")
 
         const data = await response.json()
+        stopLoading()
         return data
 
     } catch (error) {
@@ -102,7 +117,7 @@ const createManualParamsSelector = (moduleName) => {
         <div class="param-inputs">
         ${method.params.map((param) => {
             return `
-            <input type"text" id="${param}" name="${param}" placeholder=${param}></input >        
+            <input type="text" id="${param}" name="${param}" placeholder=${param}></input >        
             `
         }).join(" ")}
         </div>
@@ -194,8 +209,10 @@ const handleManualRun = async () => {
         params: dataState.manual.params
     }
 
+    log(`calling api with callstack ${callStackData}`)
+
     responseState.data = []
-    const responseData = await fetchPostApiCallStack(JSON.stringify(callStackData))
+    const responseData = await fetchPostApiCallStack(callStackData)
     responseState.data = responseData
 }
 

@@ -21,7 +21,7 @@ app.post("/api/callstack", async (req, res) => {
     try {
         const request = req.body
         const { callstack, params, module } = request
-
+        log(`incoming request: ${request}`)
         log(`resolving ${callstack.length} incoming api calls`)
         const result = await dispatchCalls(module, callstack, params)
 
@@ -36,5 +36,5 @@ app.post("/api/callstack", async (req, res) => {
 })
 
 app.listen(PORT, function () {
-    console.log(`server is running on http://localhost:${PORT}`)
+    log(`server is running on http://localhost:${PORT}`)
 })

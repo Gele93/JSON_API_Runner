@@ -39,7 +39,7 @@ export const getUserProfile = async (paramsData) => {
         .map(u => u.trim())
 
     const users = []
-
+    
     for (const param of params) {
         if (findById(param)) {
             users.push(findById(param))
@@ -54,6 +54,9 @@ export const getUserProfile = async (paramsData) => {
             continue
         }
     }
+
+    if (users.length > 0)
+        log("User(s) found successfully")
 
     return users
 }

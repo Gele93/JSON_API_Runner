@@ -18,8 +18,29 @@
 -  **multiplyMatrices**:  array1= *[[1,2,3],[3,4,5]]* , array2= *[[1,2,5,7],[3,4,2,5],[5,6,2,4]]*
 -  **getUserProfile**:  user= *2* / *Alice* / *eve@example.com*
 
-  ### 1.3 Usage:
-  -  Toogle dark mode & Align direction for convinient usage
+  ### 1.3 Dynamic Method Configuration:
+  -  The app uses a centralized `methodMap.js` to define backend modules, their methods, required parameters, and response formats.
+  - Example:
+```js
+export const methodMap = {
+    "mathService": [
+        {
+            function: "getFibonacci",
+            params: ["n"],
+            format: "number"
+        },
+        {
+            function: "multiplyMatrices",
+            params: ["array1", "array2"],
+            format: "2dArray"
+        }
+    ]
+}
+```
+  -  To add new modules only methodMap needs to be extended and the service module to be implemented
+
+  ### 1.4 Usage:
+  -  Toggle dark mode & Align direction for convenient usage
   -  Choose a module to create a callstack on
   -  Manually write the array of methods to be invoked from the chosen module (or use auto fill to call them all)
   -  Set params for desired methods

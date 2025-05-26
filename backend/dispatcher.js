@@ -16,12 +16,11 @@ export const dispatchCalls = async (module, callstack, params) => {
         log(`loading ${modulePath}`)
         const currentModule = await import(modulePath)
 
-
         for (const method of callstack) {
             const resultData = await handleCall(currentModule, method, params)
             const result = {
                 data: resultData,
-                format: methodMap[module].find(m => m.function === method).format
+                format: methodMap[module]?.find(m => m.function === method)?.format ?? "unknown"
             }
             results.push(result)
         }
@@ -55,7 +54,7 @@ const handleCall = async (currentModule, method, paramsData) => {
         log("response received successfully!")
         return result
     } catch (error) {
-        log(error)
+        throw new Error(`Could not handle call on ${method}: ${error}`)
     }
 }
 
@@ -63,7 +62,7 @@ const getParamsForMethod = async (method, paramsData) => {
     const params = paramsData.find(p => p.methodName === method)
 
     if (!params)
-        return null
+        return []
 
     return params.params
 }
