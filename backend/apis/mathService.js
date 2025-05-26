@@ -5,7 +5,7 @@ const fib = {
 
 
 export const getFibonacci = async (params) => {
-    const n = Number(params[0].value)
+    const n = Number(params.find(p => p.name === "n").value)
     if (!n) return 0
     const result = calculateFibonacci(n)
     return result
@@ -25,8 +25,55 @@ const calculateFibonacci = (n) => {
 
 
 export const multiplyMatrices = (params) => {
-    console.log("multiply Matrices")
-    let result = "multiply Matrices"
-    params.map(p => result += p.name + "-" + p.value)
+    const array1 = JSON.parse(params.find(p => p.name === "array1").value)
+    const array2 = JSON.parse(params.find(p => p.name === "array2").value)
+
+    console.log(array1, array2)
+
+    if (!array1 || !array2)
+        throw new Error("missing parameter for multiply Matrices")
+
+    const result = Array.from({ length: array1.length }, () => Array(array2[0].length).fill(0))
+
+    for (let r = 0; r < result.length; r++) {
+        for (let c = 0; c < result[r].length; c++) {
+            const a = array1[r]
+            const b = getColumn(array2, c)
+            result[r][c] = multiplyArrays(a, b)
+        }
+    }
+console.log(result)
     return result
+}
+
+const getColumn = (array, c) => {
+    const column = []
+    for (let r = 0; r < array.length; r++) {
+        column.push(array[r][c])
+    }
+    return column
+}
+
+const multiplyArrays = (a1, a2) => {
+    let result = 0
+    for (let i = 0; i < a1.length; i++) {
+        result += a1[i] * a2[i]
+    }
+    return result
+}
+
+
+
+const checkArraysValidity = (array1, array2) => {
+    if (!array1.length)
+        throw new Error("missing array")
+
+    if (!array1[0].length)
+        throw new Error("missing array")
+
+    if (array1.some(a => a.length !== array1[0].length) || array2.some(a => a.length !== array1[0].length))
+        throw new Error("array lengths not matching")
+
+    if (array2.length !== array1.length)
+        throw new Error("array lengths not matching")
 }

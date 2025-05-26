@@ -1,4 +1,5 @@
 import { log } from "./logger.js"
+import { methodMap } from "../frontend/methodMap.js"
 
 export const dispatchCall = async (call) => {
     const result = await handleCall()
@@ -17,8 +18,13 @@ export const dispatchCalls = async (module, callstack, params) => {
         log(`loading ${modulePath}`)
         const currentModule = await import(modulePath)
 
+
         for (const method of callstack) {
-            const result = await handleCall(currentModule, method, params)
+            const resultData = await handleCall(currentModule, method, params)
+            const result = {
+                data: resultData,
+                format: methodMap[module].find(m => m.function === method).format
+            }
             results.push(result)
         }
     } catch (error) {

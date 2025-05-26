@@ -2,23 +2,27 @@ export const methodMap = {
     "imageService": [
         {
             function: "getImageByName",
-            params: ["imageName"]
+            params: ["imageName"],
+            format: "image"
         },
     ],
     "mathService": [
         {
             function: "getFibonacci",
-            params: ["n"]
+            params: ["n"],
+            format: "number"
         },
         {
             function: "multiplyMatrices",
-            params: ["array1", "array2"]
+            params: ["array1", "array2"],
+            format: "2dArray"
         }
     ],
     "userService": [
         {
             function: "getUserProfile",
-            params: ["userId"]
+            params: ["userId"],
+            format: "object"
         },
     ]
 }
