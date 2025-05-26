@@ -46,10 +46,10 @@ export const methodMap = {
   -  Set params for desired methods
   -  Click Run to invoke the methods
 
-    1.4.2 Data input samples
-    -  Samples for usage found in inputSamples.json
-    -  `inputFieldsData` shows examples to invoke mathService methods properly
-    -  `dataSentToBackend` shows the actual data structure that will be sent to the server
+  ### 1.4.2 Data input samples
+  -  Samples for usage found in inputSamples.json
+  -  `inputFieldsData` shows examples to invoke mathService methods properly
+  -  `dataSentToBackend` shows the actual data structure that will be sent to the server
 
 ##  2. Technology Stack
 ### 🚀 Frontend
