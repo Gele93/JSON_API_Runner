@@ -24,12 +24,5 @@ export const methodMap = {
             params: ["user"],
             format: "arrayOfObjects"
         },
-    ],
-    "testService": [
-        {
-            function: "testFunction",
-            params: ["testParams"],
-            format: "testFormat"
-        },
     ]
 }

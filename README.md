@@ -39,12 +39,17 @@ export const methodMap = {
 ```
   -  To add new modules only methodMap needs to be extended and the service module to be implemented
 
-  ### 1.4 Usage:
+  ### 1.5.1 Usage:
   -  Toggle dark mode & Align direction for convenient usage
   -  Choose a module to create a callstack on
   -  Manually write the array of methods to be invoked from the chosen module (or use auto fill to call them all)
   -  Set params for desired methods
   -  Click Run to invoke the methods
+
+    ### 1.5.2 Data input samples
+    -  Samples for usage found in inputSamples.json
+    -  `inputFieldsData` shows examples to invoke mathService methods properly
+    -  `dataSentToBackend` shows the actual data structure that will be sent to the server
 
 ##  2. Technology Stack
 ### 🚀 Frontend

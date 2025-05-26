@@ -209,7 +209,7 @@ const handleManualRun = async () => {
         params: dataState.manual.params
     }
 
-    log(`calling api with callstack ${callStackData}`)
+    console.log(callStackData)
 
     responseState.data = []
     const responseData = await fetchPostApiCallStack(callStackData)
@@ -236,7 +236,6 @@ const create2dArrayResult = (resultData) => {
     return element
 }
 const createImageResult = (resultData) => {
-    console.log(resultData)
     return `
 <div class="result-line">
     <img src="data:image/png;base64,${resultData.data}">

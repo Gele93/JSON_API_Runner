@@ -1,5 +1,28 @@
 {
-    "modules": ["multiplyMatrices"],
-    "array1": [[1,2,3],[3,4,5]],
-    "array2": [[1,2,5,7],[3,4,2,5],[5,6,2,4]]
+    "inputFieldsData": {
+        "module": "mathService",
+        "methods": ["getFibonacci", "multiplyMatrices"],
+        "n": 22,
+        "array1": [[1,2,3],[3,4,5]],
+        "array2": [[1,2,5,7],[3,4,2,5],[5,6,2,4]]
+    },
+    "dataSentToBackend": {
+        "module": "mathService",
+        "callstack": ["getFibonacci", "multiplyMatrices"],
+        "params": [
+            {
+                "methodName": "getFibonacci",
+                "params": [
+                    { "name": "n", "value": "22" }
+                ]
+            },
+            {
+                "methodName": "multiplyMatrices",
+                "params": [
+                    { "name": "array1", "value": "[[1,2,3],[3,4,5]]" },
+                    { "name": "array2", "value": "[[1,2,5,7],[3,4,2,5],[5,6,2,4]]" }
+                ]
+            }
+        ]
+    }   
 }
