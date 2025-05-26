@@ -50,7 +50,7 @@ const handleAlignToggle = (e) => {
     }
 }
 
-const createTextArea = () => `<textarea id="data-input-text" rows="10" cols="50" placeholder="Insert JSON manually"></textarea>`
+const createTextArea = () => `<textarea id="data-input-text" rows="10" cols="50" placeholder='Insert JSON manually eg.: ["getFibonacci", "multiplyMatrices"]'></textarea>`
 
 
 const handleMethodSelection = (e) => {
@@ -289,8 +289,9 @@ const handleDropDownRun = async () => {
         method: dataState.dropDown.method,
         params: dataState.dropDown.params
     }
-    const responseData = await fetchPostApiCall(JSON.stringify(callData))
-    responseState.data = responseData
+    console.log(callData)
+    //const responseData = await fetchPostApiCall(JSON.stringify(callData))
+    //responseState.data = responseData
 }
 
 const handleManualRun = async () => {
@@ -302,22 +303,22 @@ const handleManualRun = async () => {
         params: dataState.manual.params
     }
 
-    console.log(callStackData)
-
     responseState.data = []
     const responseData = await fetchPostApiCallStack(JSON.stringify(callStackData))
     responseState.data = responseData
-
-    console.log(responseData)
 }
 
 const createResults = () => {
-    //TODO
+    return `
+    <div id="results">
+    ${responseState.data}
+    </div>
+`
 }
 
 const drawResults = () => {
-    const resultContainer = document.getElementById("result")
-    resultContainer.insertAdjacentHTML("beforeend", createResults)
+    const resultContainer = document.getElementById("result-container")
+    resultContainer.insertAdjacentHTML("beforeend", createResults())
 }
 
 const handleRun = async () => {

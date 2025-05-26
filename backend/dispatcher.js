@@ -18,12 +18,11 @@ export const dispatchCalls = async (module, callstack, params) => {
         const currentModule = await import(modulePath)
 
         for (const method of callstack) {
-            console.log(method)
             const result = await handleCall(currentModule, method, params)
             results.push(result)
         }
     } catch (error) {
-        log("error")
+        log(error)
     }
 
     return results
@@ -37,7 +36,7 @@ const handleCall = async (currentModule, method, paramsData) => {
 
     try {
         if (typeof currentModule[method] !== "function")
-            throw new error(`Method ${method} was not found in ${currentModule} module`)
+            throw new Error(`Method ${method} was not found`)
 
         const params = await getParamsForMethod(method, paramsData)
 
@@ -45,7 +44,7 @@ const handleCall = async (currentModule, method, paramsData) => {
         const result = await currentModule[method](params)
 
         if (!result)
-            throw new error(`failed to get result for ${method}`)
+            throw new Error(`failed to get result for ${method}`)
 
         log("response received successfully!")
         return result
