@@ -111,6 +111,20 @@ main {
     justify-content: start;
 }
 
+#text-area-with-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#text-area-with-button > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4vw;
+    height: 4vh;
+    padding: 0.1rem;
+}
+
 #data-input-text {
     height: 12vh;
     width: 80%;
@@ -160,9 +174,10 @@ main {
 
 
 #result-container {
-    height: 45vh;
+    height: 40vh;
     width: 65vw;
     border-radius: 30px;
+    padding: 2rem;
     background-color: var(--box-background);
     box-shadow: 5px 5px 10px #1a1a1a;
     overflow-y: auto;

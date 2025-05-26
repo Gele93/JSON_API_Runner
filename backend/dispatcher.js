@@ -1,14 +1,12 @@
 import { log } from "./logger.js"
 import { methodMap } from "../frontend/methodMap.js"
 
-export const dispatchCall = async (call) => {
-    const result = await handleCall()
-    return result
-}
 
 /**
- * dispatching incoming calls and calling needed methods from chosen modules 
- * @param {call[]} calls - array of calls ({module:string, method:string, params:string[]})
+ * dispatching incoming calls and calling needed methods from chosen module
+ * @param {string} module - chosen module to load
+ * @param {string} callstack - chosen methods of the loaded module to invoke
+ * @param {Array} params - possible params to invoke the proper methods with
  */
 export const dispatchCalls = async (module, callstack, params) => {
     const results = []
@@ -36,7 +34,9 @@ export const dispatchCalls = async (module, callstack, params) => {
 
 /**
  * handle one call on the apis
- * @param {call} call - {module, method, params[]} 
+ * @param {module} currentModule - loaded module 
+ * @param {function} method - chosen method to invoke 
+ * @param {Array} paramsData - possible params for the invoked method 
  */
 const handleCall = async (currentModule, method, paramsData) => {
 

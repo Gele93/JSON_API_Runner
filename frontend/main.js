@@ -66,7 +66,31 @@ const handleAlignToggle = (e) => {
 }
 
 const createTextArea = () => `
-<textarea id="data-input-text" rows="10" cols="50" placeholder='Insert JSON manually eg.: ["getFibonacci", "multiplyMatrices"]'></textarea>`
+<div id="text-area-with-button">
+    <textarea id="data-input-text" rows="10" cols="50" placeholder='Insert JSON manually eg.: ["getFibonacci", "multiplyMatrices"]'></textarea>
+    <button id="auto-fill">Auto Fill</button>
+</div>
+`
+
+const handleAutoFill = () => {
+    switch (dataState.module) {
+        case "imageService":
+            dataState.manual.JSON = `["getImageByName"]`
+            document.getElementById("data-input-text").textContent = `["getImageByName"]`
+            break;
+        case "mathService":
+            dataState.manual.JSON = `["getFibonacci", "multiplyMatrices"]`
+            document.getElementById("data-input-text").textContent = `["getFibonacci", "multiplyMatrices"]`
+            break;
+        case "userService":
+            dataState.manual.JSON = `["getUserProfile"]`
+            document.getElementById("data-input-text").textContent = `["getUserProfile"]`
+            break;
+
+        default:
+            break;
+    }
+}
 
 const createManualParamsSelector = (moduleName) => {
     return `
@@ -183,8 +207,6 @@ ${resultData.data}
 const create2dArrayResult = (resultData) => {
     let element = '<div class="result-line">'
 
-    console.log(resultData)
-
     for (const row of resultData.data) {
         element += "<div>"
         for (const e of row) {
@@ -199,8 +221,17 @@ const create2dArrayResult = (resultData) => {
 const createImageResult = () => {
 
 }
-const createObjectResult = () => {
+const createArrayOfObjectsResult = (resultData) => {
+    let element = '<div class="result-line">'
 
+    for (const object of resultData.data) {
+        for (const key in object) {
+            element += `<div>${key}: ${object[key]}</div>`
+        }
+    }
+    element += "</div>"
+
+    return element
 }
 
 const createResults = (resultData) => {
@@ -211,8 +242,8 @@ const createResults = (resultData) => {
             return createImageResult(resultData);
         case "2dArray":
             return create2dArrayResult(resultData)
-        case "object":
-            return createObjectResult(resultData);
+        case "arrayOfObjects":
+            return createArrayOfObjectsResult(resultData);
         default:
             break;
     }
@@ -243,6 +274,9 @@ const main = async () => {
 
     const dataInputContainer = document.getElementById("data-input-container")
     dataInputContainer.insertAdjacentHTML("beforeend", createTextArea())
+
+    const autoFillButton = document.getElementById("auto-fill")
+    autoFillButton.addEventListener("click", handleAutoFill)
 
     const textarea = document.getElementById("data-input-text")
     textarea.addEventListener("input", handleJsonChange)

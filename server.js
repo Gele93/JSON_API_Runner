@@ -36,23 +36,6 @@ app.post("/api/callstack", async (req, res) => {
     }
 })
 
-app.post("/api/call", async (req, res) => {
-    try {
-        const call = req.body
-
-        log(`resolving incoming api call`)
-        const result = await dispatchCalls(call)
-
-        if (!result)
-            throw new error("Failed to get API results")
-
-        log("Calls resolved successfully")
-        res.send(result)
-    } catch (error) {
-        log(error)
-    }
-})
-
 app.listen(PORT, function () {
     console.log(`server is running on http://localhost:${PORT}`)
 })

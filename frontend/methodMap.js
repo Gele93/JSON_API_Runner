@@ -21,8 +21,8 @@ export const methodMap = {
     "userService": [
         {
             function: "getUserProfile",
-            params: ["userId"],
-            format: "object"
+            params: ["user"],
+            format: "arrayOfObjects"
         },
     ]
 }
