@@ -13,10 +13,10 @@
 -  **User Service**: Getting user informations from a database
 
   ### 1.2 Methods:
--  **getImageByName**: params: image: *cat.jpg*
--  **getFibonacci**: params: n *10*
--  **multiplyMatrices**: params: array1 *[[1,2,3],[3,4,5]]* , array2 *[[1,2,5,7],[3,4,2,5],[5,6,2,4]]*
--  **getUserProfile**: params: user *2* / *Alice* / *eve@example.com*
+-  **getImageByName**:  image= *cat.jpg*
+-  **getFibonacci**:  n= *10*
+-  **multiplyMatrices**:  array1= *[[1,2,3],[3,4,5]]* , array2= *[[1,2,5,7],[3,4,2,5],[5,6,2,4]]*
+-  **getUserProfile**:  user= *2* / *Alice* / *eve@example.com*
 
   ### 1.3 Usage:
   -Toogle dark mode & Align direction for convinient usage
