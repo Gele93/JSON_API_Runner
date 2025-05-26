@@ -1,15 +1,29 @@
 import { log } from "./logger.js"
 
+export const dispatchCall = async (call) => {
+    const result = await handleCall()
+    return result
+}
+
 /**
  * dispatching incoming calls and calling needed methods from chosen modules 
  * @param {call[]} calls - array of calls ({module:string, method:string, params:string[]})
  */
-export const dispatchCalls = async (calls) => {
+export const dispatchCalls = async (module, callstack, params) => {
     const results = []
 
-    for (const call of calls) {
-        const result = await handleCall(call)
-        results.push(result)
+    try {
+        const modulePath = `./apis/${module}.js`
+        log(`loading ${modulePath}`)
+        const currentModule = await import(modulePath)
+
+        for (const method of callstack) {
+            console.log(method)
+            const result = await handleCall(currentModule, method, params)
+            results.push(result)
+        }
+    } catch (error) {
+        log("error")
     }
 
     return results
@@ -19,25 +33,32 @@ export const dispatchCalls = async (calls) => {
  * handle one call on the apis
  * @param {call} call - {module, method, params[]} 
  */
-const handleCall = async (call) => {
-    const { module, method, params } = call
-    const modulePath = `./apis/${module}.js`
+const handleCall = async (currentModule, method, paramsData) => {
 
     try {
-        const currentModule = await import(modulePath)
-
         if (typeof currentModule[method] !== "function")
             throw new error(`Method ${method} was not found in ${currentModule} module`)
 
-        log(`awaiting response from ${method} method of ${modulePath} module with params: ${params}`)
-        const result = await currentModule[method]()
+        const params = await getParamsForMethod(method, paramsData)
+
+        log(`awaiting response from ${method} method with params: ${params}`)
+        const result = await currentModule[method](params)
 
         if (!result)
-            throw new error(`failed to get result of the ${modulePath} module`)
+            throw new error(`failed to get result for ${method}`)
 
         log("response received successfully!")
         return result
     } catch (error) {
         log(error)
     }
+}
+
+const getParamsForMethod = async (method, paramsData) => {
+    const params = paramsData.find(p => p.methodName === method)
+
+    if (!params)
+        return null
+
+    return params.params
 }

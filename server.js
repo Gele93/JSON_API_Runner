@@ -17,12 +17,31 @@ app.get("/", (req, res) => {
     res.sendFile(join(staticDir, "/index.html"))
 })
 
-app.post("/api", async (req, res) => {
-    try {
-        const calls = req.body
 
-        log(`resolving ${calls.length} incoming api calls`)
-        const result = await dispatchCalls(calls)
+app.post("/api/callstack", async (req, res) => {
+    try {
+        const request = req.body
+        const { callstack, params, module } = request
+
+        log(`resolving ${callstack.length} incoming api calls`)
+        const result = await dispatchCalls(module, callstack, params)
+
+        if (!result)
+            throw new error("Failed to get API results")
+
+        log("Calls resolved successfully")
+        res.send(result)
+    } catch (error) {
+        log(error)
+    }
+})
+
+app.post("/api/call", async (req, res) => {
+    try {
+        const call = req.body
+
+        log(`resolving incoming api call`)
+        const result = await dispatchCalls(call)
 
         if (!result)
             throw new error("Failed to get API results")

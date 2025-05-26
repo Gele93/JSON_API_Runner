@@ -3,6 +3,8 @@
     --secondary: #82c2dd;
     --text: #1a1a1a;
     --contrast: #d4d4d4;
+    --box-background: #1a1a1a6e;
+
 }
 
 .dark {
@@ -10,6 +12,7 @@
     --secondary: #00364d;
     --text: #d4d4d4;
     --contrast: #1a1a1a;
+    --box-background: #dfdfdf69;
 }
 
 
@@ -92,16 +95,21 @@ main {
 
 #data-container{
     width: 60vw;
+    height: 35vh;
     justify-content: space-between;
     display: flex;
 }
 
 #data-input-container {
     gap: 2vh;
-    height: 20vh;
+    height: 100%;
     width: 40vw;
     align-items: center;
     justify-content: start;
+}
+
+#data-input-text {
+    height: 12vh;
 }
 
 .data-input {
@@ -122,6 +130,19 @@ main {
     width: 60%;
 }
 
+.param-selector-line {
+    display: flex;
+    gap: 2vw;
+    width: 100%;    
+    justify-content: flex-start;
+}
+.param-selector-line > label {
+    width: 10vw;
+}
+.param-selector-line > .param-inputs > input {}
+
+
+
 #data-container > .button-container {
     justify-content: space-evenly;
     align-items: center;
@@ -133,5 +154,10 @@ main {
 }
 
 #result {
-    height: 30vh;
+    height: 35vh;
+    width: 65vw;
+    border-radius: 30px;
+    background-color: var(--box-background);
+    box-shadow: 5px 5px 10px #1a1a1a;
+    overflow-y: auto;
 }
