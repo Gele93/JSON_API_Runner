@@ -184,6 +184,10 @@ img {
 }
 
 #result-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     height: 40vh;
     width: 65vw;
     border-radius: 30px;
@@ -194,8 +198,6 @@ img {
 }
 
 .loader {
-    position: relative;
-    left:40%;
   width: 20%;
   padding: 8px;
   aspect-ratio: 1;

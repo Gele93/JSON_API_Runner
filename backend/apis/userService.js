@@ -1,3 +1,5 @@
+import { log } from "../logger.js";
+
 const users = [
     {
         id: 1,
