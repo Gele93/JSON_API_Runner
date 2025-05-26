@@ -56,6 +56,7 @@ footer > p {
 button {
     display: flex;
     align-items: center;
+    justify-content: center;
     background-color: var(--primary);
     padding: 1rem;
     border-radius: 10px;
@@ -82,6 +83,10 @@ main {
     height: 90vh;
 }
 
+img {
+    width: 20vw;
+}
+
 .column {
     display: flex;
     flex-direction: column;
@@ -97,6 +102,7 @@ main {
 }
 
 #data-container{
+    margin-top: 5vh;
     width: 60vw;
     height: 35vh;
     justify-content: space-between;
@@ -173,6 +179,7 @@ main {
 }
 
 
+
 #result-container {
     height: 40vh;
     width: 65vw;
@@ -183,6 +190,3 @@ main {
     overflow-y: auto;
 }
 
-img {
-    width: 20vw;
-}

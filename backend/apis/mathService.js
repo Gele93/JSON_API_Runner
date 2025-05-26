@@ -28,10 +28,12 @@ export const multiplyMatrices = (params) => {
     const array1 = JSON.parse(params.find(p => p.name === "array1").value)
     const array2 = JSON.parse(params.find(p => p.name === "array2").value)
 
+    console.log(array2)
+
     if (!array1 || !array2)
         throw new Error("missing parameter for multiply Matrices")
 
-    checkArraysValidity()
+    checkArraysValidity(array1, array2)
 
     const result = Array.from({ length: array1.length }, () => Array(array2[0].length).fill(0))
 
@@ -70,6 +72,6 @@ const checkArraysValidity = (array1, array2) => {
     if (!array1[0].length)
         throw new Error("missing array")
 
-    if (array1.some(a => a.length !== array1[0].length) || array2.some(a => a.length !== array1[0].length))
+    if (array1.some(a => a.length !== array1[0].length) || array2.length !== array1[0].length)
         throw new Error("array lengths not matching")
 }
