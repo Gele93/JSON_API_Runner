@@ -1,6 +1,5 @@
 import { methodMap } from "./methodMap.js"
 const body = document.getElementById("body")
-const root = document.getElementById("root")
 const api = "http://localhost:3000/api"
 
 const dataState = {
@@ -281,6 +280,7 @@ const collectManualParams = () => {
     dataState.manual.params = paramsData
 }
 
+/*
 const handleDropDownRun = async () => {
     collectDropDownParams()
     responseState.data = []
@@ -293,6 +293,7 @@ const handleDropDownRun = async () => {
     //const responseData = await fetchPostApiCall(JSON.stringify(callData))
     //responseState.data = responseData
 }
+    */
 
 const handleManualRun = async () => {
     collectManualParams()
@@ -308,17 +309,57 @@ const handleManualRun = async () => {
     responseState.data = responseData
 }
 
-const createResults = () => {
-    return `
-    <div id="results">
-    ${responseState.data}
-    </div>
+const createNumberResult = (resultData) => `
+<div class="result-line">
+${resultData.data}
+</div>
 `
+const create2dArrayResult = (resultData) => {
+    let element = '<div class="result-line">'
+
+    console.log(resultData)
+
+    for (const row of resultData.data) {
+        element += "<div>"
+        for (const e of row) {
+            element += e.toString() + ", "
+        }
+        element += "</div>"
+    }
+    element += "</div>"
+
+    return element
+}
+const createImageResult = () => {
+
+}
+const createObjectResult = () => {
+
+}
+
+const createResults = (resultData) => {
+    switch (resultData.format) {
+        case "number":
+            return createNumberResult(resultData)
+        case "image":
+            return createImageResult(resultData);
+        case "2dArray":
+            return create2dArrayResult(resultData)
+        case "object":
+            return createObjectResult(resultData);
+        default:
+            break;
+    }
 }
 
 const drawResults = () => {
+    let resultsHtml = ""
+    for (const resultData of responseState.data) {
+        console.log(resultData)
+        resultsHtml += createResults(resultData)
+    }
     const resultContainer = document.getElementById("result-container")
-    resultContainer.insertAdjacentHTML("beforeend", createResults())
+    resultContainer.insertAdjacentHTML("beforeend", resultsHtml)
 }
 
 const handleRun = async () => {
