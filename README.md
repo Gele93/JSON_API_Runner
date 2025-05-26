@@ -40,12 +40,12 @@
 
  
 ## 3. Installation and Running
-### 1. Navigate to the project folder
-### 2. Install dependencies
+- 1. Navigate to the project folder
+- 2. Install dependencies
 ```
 npm i
 ```
-### 3. Start the backend server
+- 3. Start the backend server
 ```
 node server.js
 ```
@@ -54,7 +54,7 @@ node server.js
 -npm
 
 
-## 5. Contact
+## 4. Contact
 Developer: **[Gelecsák Tamás]**  
 Email: **[gelecsak.tamas@gmail.com]**  
 LinkedIn: **[https://www.linkedin.com/in/tamasgelecsak]**
