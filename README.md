@@ -37,7 +37,7 @@ export const methodMap = {
     ]
 }
 ```
-  -  To add new modules only methodMap needs to be extended and the service module to be implemented
+  -  To add new modules only methodMap needs to be extended, and the service module to be implemented
 
   ### 1.4.1 Usage:
   -  Toggle dark mode & Align direction for convenient usage

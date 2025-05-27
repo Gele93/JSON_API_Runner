@@ -27,7 +27,40 @@ const stopLoading = () => {
     resultContainer.removeChild(loader)
 }
 
+const showErrorMessage = (message) => {
+    const errorContainer = document.getElementById("error-container")
+    errorContainer.innerHTML = ""
+    const errorElement = `
+    <p class="error-message">
+        ${message}
+    </p>
+    `
+    errorContainer.insertAdjacentHTML("beforeend", errorElement)
+}
+
+const removeErrorMessage = () => document.getElementById("error-container").innerHTML = ""
+
+const checkMethodValidity = () => {
+    const errors = []
+    const methods = JSON.parse(dataState.manual.JSON)
+    for (const method of methods) {
+        if (!methodMap[dataState.module].some(m => m.function == method))
+            errors.push(method)
+    }
+    if (errors.length > 0) {
+        let errorMsg = "The following methods were not found:"
+        errors.forEach((e, i) => {
+            if (i > 0)
+                errorMsg += ","
+            errorMsg += ` ${e}`
+        })
+        showErrorMessage(errorMsg)
+    }
+}
+
 const fetchPostApiCallStack = async (callData) => {
+    removeErrorMessage()
+    checkMethodValidity()
     startLoading()
     try {
         const response = await fetch(`${api}/callstack`, {
@@ -47,6 +80,7 @@ const fetchPostApiCallStack = async (callData) => {
 
     } catch (error) {
         console.error(error)
+        showErrorMessage(`Fetching callstack on module ${dataState.module} failed.`)
     }
 }
 
@@ -87,26 +121,6 @@ const createTextArea = () => `
 </div>
 `
 
-const handleAutoFill = () => {
-    switch (dataState.module) {
-        case "imageService":
-            dataState.manual.JSON = `["getImageByName"]`
-            document.getElementById("data-input-text").textContent = `["getImageByName"]`
-            break;
-        case "mathService":
-            dataState.manual.JSON = `["getFibonacci", "multiplyMatrices"]`
-            document.getElementById("data-input-text").textContent = `["getFibonacci", "multiplyMatrices"]`
-            break;
-        case "userService":
-            dataState.manual.JSON = `["getUserProfile"]`
-            document.getElementById("data-input-text").textContent = `["getUserProfile"]`
-            break;
-
-        default:
-            break;
-    }
-}
-
 const createManualParamsSelector = (moduleName) => {
     return `
     <div id="manual-params-selector-container">
@@ -126,22 +140,6 @@ const createManualParamsSelector = (moduleName) => {
     }).join(" ")}
     </div>
     `
-}
-
-const handleApiSelection = (e) => {
-    const dataInputContainer = document.getElementById("data-input-container")
-    const manualParamContainer = document.getElementById("manual-params-selector-container")
-
-    if (manualParamContainer) {
-        dataInputContainer.removeChild(manualParamContainer)
-    }
-
-    const moduleName = e.target.value
-    dataState.module = moduleName
-
-    const element = createManualParamsSelector(moduleName)
-    dataInputContainer.insertAdjacentHTML("beforeend", element)
-
 }
 
 const createModuleSelector = () => {
@@ -169,6 +167,41 @@ const createApiSelector = () => {
     dataInputContainer.insertAdjacentHTML("beforeend", element)
     const apiSelector = document.getElementById("api-selector")
     apiSelector.addEventListener("change", handleApiSelection)
+}
+
+const handleAutoFill = () => {
+    switch (dataState.module) {
+        case "imageService":
+            dataState.manual.JSON = `["getImageByName"]`
+            document.getElementById("data-input-text").value = `["getImageByName"]`
+            break;
+        case "mathService":
+            dataState.manual.JSON = `["getFibonacci", "multiplyMatrices"]`
+            document.getElementById("data-input-text").value = `["getFibonacci", "multiplyMatrices"]`
+            break;
+        case "userService":
+            dataState.manual.JSON = `["getUserProfile"]`
+            document.getElementById("data-input-text").value = `["getUserProfile"]`
+            break;
+
+        default:
+            break;
+    }
+}
+
+const handleApiSelection = (e) => {
+    const dataInputContainer = document.getElementById("data-input-container")
+    const manualParamContainer = document.getElementById("manual-params-selector-container")
+
+    if (manualParamContainer) {
+        dataInputContainer.removeChild(manualParamContainer)
+    }
+
+    const moduleName = e.target.value
+    dataState.module = moduleName
+
+    const element = createManualParamsSelector(moduleName)
+    dataInputContainer.insertAdjacentHTML("beforeend", element)
 }
 
 const handleJsonChange = (e) => {
@@ -209,11 +242,14 @@ const handleManualRun = async () => {
         params: dataState.manual.params
     }
 
-    console.log(callStackData)
-
     responseState.data = []
     const responseData = await fetchPostApiCallStack(callStackData)
     responseState.data = responseData
+}
+
+const handleRun = async () => {
+    await handleManualRun()
+    drawResults()
 }
 
 const createNumberResult = (resultData) => `
@@ -280,10 +316,6 @@ const drawResults = () => {
     resultContainer.insertAdjacentHTML("beforeend", resultsHtml)
 }
 
-const handleRun = async () => {
-    await handleManualRun()
-    drawResults()
-}
 
 const main = async () => {
     const themeButton = document.getElementById("theme-selector")

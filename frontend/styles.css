@@ -186,7 +186,8 @@ img {
 #result-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 4vh;
     align-items: center;
     height: 40vh;
     width: 65vw;
@@ -195,6 +196,23 @@ img {
     background-color: var(--box-background);
     box-shadow: 5px 5px 10px #1a1a1a;
     overflow-y: auto;
+    font-size: large;
+}
+
+.result-line {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#error-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5vh;
+    width: 65vw;
+    color: red;
 }
 
 .loader {
