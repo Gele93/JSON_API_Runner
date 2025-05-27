@@ -45,7 +45,7 @@ const handleCall = async (currentModule, method, paramsData) => {
 
         const params = await getParamsForMethod(method, paramsData)
 
-        log(`awaiting response from ${method} method with params: ${params}`)
+        log(`awaiting response from ${method}`)
         const result = await currentModule[method](params)
 
         if (!result)

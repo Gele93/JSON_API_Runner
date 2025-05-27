@@ -151,11 +151,11 @@ img {
 }
 
 .selector-line > label {
-    width:40%;
+    width:10vw;
 }
 
-.selector-line > select, .selector-line > input {
-    width: 60%;
+.selector-line > select, .selector-line > .param-inputs {
+    width: 30vw;
 }
 
 .param-selector-line {

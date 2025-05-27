@@ -24,5 +24,10 @@ export const methodMap = {
             params: ["user"],
             format: "arrayOfObjects"
         },
+        {
+            function: "createUserProfile",
+            params: ["name", "email", "age"],
+            format: "arrayOfObjects"
+        },
     ]
 }

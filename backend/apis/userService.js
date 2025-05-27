@@ -33,6 +33,21 @@ const users = [
     }
 ];
 
+export const createUserProfile = async (paramsData) => {
+    const name = paramsData.find(p => p.name === "name").value
+    const email = paramsData.find(p => p.name === "email").value
+    const age = Number(paramsData.find(p => p.name === "age").value)
+    const id = users.sort((a, b) => b.id - a.id)[0].id + 1
+    const newUser = {
+        id,
+        name,
+        email,
+        age
+    }
+    users.push(newUser)
+    return [newUser]
+}
+
 
 export const getUserProfile = async (paramsData) => {
     const userParams = paramsData.find(p => p.name === "user").value
@@ -41,7 +56,7 @@ export const getUserProfile = async (paramsData) => {
         .map(u => u.trim())
 
     const users = []
-    
+
     for (const param of params) {
         if (findById(param)) {
             users.push(findById(param))
@@ -68,3 +83,5 @@ const findById = (id) => users.find(u => u.id === Number(id))
 const findByEmail = (email) => users.find(u => u.email === email)
 
 const findByName = (name) => users.filter(u => u.name.toLowerCase().includes(name.toLowerCase()))
+
+
