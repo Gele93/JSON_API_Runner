@@ -66,6 +66,7 @@ export const methodMap = {
 
  
 ## 3. Installation and Running
+-  Clone the repo
 -  Navigate to the project folder
 -  Install dependencies
 ```
