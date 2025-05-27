@@ -92,7 +92,8 @@ const fetchPostApiCallStack = async (callData) => {
     removeErrorMessage()
     if (!checkMethodValidity())
         return []
-    checkParamsValidity()
+    if (!checkParamsValidity())
+        return []
     startLoading()
     try {
         const response = await fetch(`${api}/callstack`, {
