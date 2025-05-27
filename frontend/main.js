@@ -1,4 +1,5 @@
-import { methodMap } from "./methodMap.js"
+import { methodMap } from "./utilities/methodMap.js"
+import { createModuleSelector, createManualParamsSelector, createTextArea, createNumberResult, create2dArrayResult, createImageResult, createArrayOfObjectsResult } from "./ui.js"
 
 const body = document.getElementById("body")
 const api = "http://localhost:3000/api"
@@ -55,12 +56,15 @@ const checkMethodValidity = () => {
             errorMsg += ` ${e}`
         })
         showErrorMessage(errorMsg)
+        return false
     }
+    return true
 }
 
 const fetchPostApiCallStack = async (callData) => {
     removeErrorMessage()
-    checkMethodValidity()
+    if (!checkMethodValidity())
+        return []
     startLoading()
     try {
         const response = await fetch(`${api}/callstack`, {
@@ -114,79 +118,12 @@ const handleAlignToggle = (e) => {
     }
 }
 
-const createTextArea = () => `
-<div id="text-area-with-button">
-    <textarea id="data-input-text" rows="10" cols="50" placeholder='Insert JSON manually eg.: ["getFibonacci", "multiplyMatrices"]'></textarea>
-    <button id="auto-fill">Auto Fill</button>
-</div>
-`
-
-const createManualParamsSelector = (moduleName) => {
-    return `
-    <div id="manual-params-selector-container">
-    ${methodMap[moduleName].map((method) => {
-        return `
-    <div class="selector-line param-selector-line">
-        <label>${method.function}</label>
-        <div class="param-inputs">
-        ${method.params.map((param) => {
-            return `
-            <input type="text" id="${param}" name="${param}" placeholder=${param}></input >        
-            `
-        }).join(" ")}
-        </div>
-    </div>
-    `
-    }).join(" ")}
-    </div>
-    `
-}
-
-const createModuleSelector = () => {
-    let element = `
-<div id="api-selector-container" class="selector-line">
-<label for="api-selector">Choose a module:</label>
-<select id="api-selector" name="api-selector">
-<option value="">--Please choose a module--</option>
-`
-    for (const module in methodMap) {
-        element += `<option value="${module}">${module}</option>
-        `
-    }
-
-    element += `
-</select>
-</div>
-`
-    return element
-}
-
 const createApiSelector = () => {
     const dataInputContainer = document.getElementById("data-input-container")
     const element = createModuleSelector()
     dataInputContainer.insertAdjacentHTML("beforeend", element)
     const apiSelector = document.getElementById("api-selector")
     apiSelector.addEventListener("change", handleApiSelection)
-}
-
-const handleAutoFill = () => {
-    switch (dataState.module) {
-        case "imageService":
-            dataState.manual.JSON = `["getImageByName"]`
-            document.getElementById("data-input-text").value = `["getImageByName"]`
-            break;
-        case "mathService":
-            dataState.manual.JSON = `["getFibonacci", "multiplyMatrices"]`
-            document.getElementById("data-input-text").value = `["getFibonacci", "multiplyMatrices"]`
-            break;
-        case "userService":
-            dataState.manual.JSON = `["getUserProfile"]`
-            document.getElementById("data-input-text").value = `["getUserProfile"]`
-            break;
-
-        default:
-            break;
-    }
 }
 
 const handleApiSelection = (e) => {
@@ -202,6 +139,20 @@ const handleApiSelection = (e) => {
 
     const element = createManualParamsSelector(moduleName)
     dataInputContainer.insertAdjacentHTML("beforeend", element)
+}
+
+const getAllMethodsOfModule = (module) => {
+    const methods = []
+    for (const method of methodMap[module]) {
+        methods.push(method.function)
+    }
+    return JSON.stringify(methods)
+}
+
+const handleAutoFill = () => {
+    let jsonString = getAllMethodsOfModule(dataState.module)
+    dataState.manual.JSON = jsonString
+    document.getElementById("data-input-text").value = jsonString
 }
 
 const handleJsonChange = (e) => {
@@ -250,46 +201,6 @@ const handleManualRun = async () => {
 const handleRun = async () => {
     await handleManualRun()
     drawResults()
-}
-
-const createNumberResult = (resultData) => `
-<div class="result-line">
-${resultData.data}
-</div>
-`
-const create2dArrayResult = (resultData) => {
-    let element = '<div class="result-line">'
-
-    for (const row of resultData.data) {
-        element += "<div>"
-        for (const e of row) {
-            element += e.toString() + ", "
-        }
-        element += "</div>"
-    }
-    element += "</div>"
-
-    return element
-}
-const createImageResult = (resultData) => {
-    return `
-<div class="result-line">
-    <img src="data:image/png;base64,${resultData.data}">
-</div>
-`
-}
-
-const createArrayOfObjectsResult = (resultData) => {
-    let element = '<div class="result-line">'
-
-    for (const object of resultData.data) {
-        for (const key in object) {
-            element += `<div>${key}: ${object[key]}</div>`
-        }
-    }
-    element += "</div>"
-
-    return element
 }
 
 const createResults = (resultData) => {

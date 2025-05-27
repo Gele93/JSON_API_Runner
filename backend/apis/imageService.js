@@ -11,7 +11,6 @@ export const getImageByName = async (params) => {
         const imagePath = join(__dirname, "..", "images", imageName);
         const imageBuffer = await fs.readFile(imagePath);
         const base64Image = imageBuffer.toString("base64");
-        console.log(base64Image)
         log("Image loaded successfully!")
         return base64Image
     } catch (err) {

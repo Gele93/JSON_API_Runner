@@ -1,5 +1,5 @@
 import { log } from "./logger.js"
-import { methodMap } from "../frontend/methodMap.js"
+import { methodMap } from "../frontend/utilities/methodMap.js"
 
 
 /**
