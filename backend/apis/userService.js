@@ -38,6 +38,16 @@ export const createUserProfile = async (paramsData) => {
     const email = paramsData.find(p => p.name === "email").value
     const age = Number(paramsData.find(p => p.name === "age").value)
     const id = users.sort((a, b) => b.id - a.id)[0].id + 1
+
+    if (!name)
+        throw new Error("Name is missing for new user")
+
+    if (!email)
+        throw new Error("Email is missing for new user")
+
+    if (!age)
+        throw new Error("Age is missing for new user")
+
     const newUser = {
         id,
         name,
@@ -51,9 +61,15 @@ export const createUserProfile = async (paramsData) => {
 
 export const getUserProfile = async (paramsData) => {
     const userParams = paramsData.find(p => p.name === "user").value
+
+    if (!userParams) {
+        throw new Error("Params is missing for finding user")
+    }
+
     const params = userParams
         .split(",")
         .map(u => u.trim())
+
 
     const users = []
 

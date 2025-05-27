@@ -61,10 +61,38 @@ const checkMethodValidity = () => {
     return true
 }
 
+const checkParamsValidity = () => {
+    const errors = []
+    const methods = JSON.parse(dataState.manual.JSON)
+    for (const method of methods) {
+        const paramsOfMethod = methodMap[dataState.module].find(m => m.function === method).params
+        for (const param of paramsOfMethod) {
+            if (!dataState.manual.params.find(p => p.methodName === method).params.some(p => p.paramName === param))
+                errors.push({
+                    method, param
+                })
+        }
+    }
+
+    if (errors.length > 0) {
+        let errorMsg = ""
+        errors.forEach((e, i) => {
+            if (i > 0)
+                errorMsg += ", "
+            errorMsg += `${e.method} is missing ${e.param}`
+        })
+        showErrorMessage(errorMsg)
+        return false
+    }
+    return true
+
+}
+
 const fetchPostApiCallStack = async (callData) => {
     removeErrorMessage()
     if (!checkMethodValidity())
         return []
+    checkParamsValidity()
     startLoading()
     try {
         const response = await fetch(`${api}/callstack`, {
