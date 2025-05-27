@@ -37,13 +37,13 @@ export const methodMap = {
     ]
 }
 ```
-  -  To add new modules & methods only methodMap needs to be extended, and the service module to be implemented
-  -  The UI will automatically include the new features
+  -  To add new modules & methods, only methodMap needs to be extended, and the service module to be implemented
+  -  UI will automatically include the new features
   -  The *paramsData* argument will be passed to the new method 
 ```js
         paramsData.find(p => p.name === "array1").value
 ```
-  - this will return the param filled into the correlating input field
+  - This will return the param filled into the correlating input field
 
   ### 1.4.1 Usage:
   -  Toggle dark mode & Align direction for convenient usage
